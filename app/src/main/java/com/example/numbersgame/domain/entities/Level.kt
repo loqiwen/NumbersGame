@@ -1,5 +1,7 @@
 package com.example.numbersgame.domain.entities
 
-enum class Level {
+import java.io.Serializable
+
+enum class Level{
     TEST, EASY, NORMAL, HARD
 }

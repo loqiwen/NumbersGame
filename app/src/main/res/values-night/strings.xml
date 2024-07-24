@@ -1,0 +1,6 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <string name="test_level">Тестовый</string>
+    <string name="easy_level">Лёгкий</string>
+    <string name="normal_level">Нормальный</string>
+</resources>
