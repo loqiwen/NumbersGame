@@ -16,16 +16,17 @@ import com.example.numbersgame.domain.entities.Question
 import com.example.numbersgame.domain.usecases.GenerateQuestionUsecase
 import com.example.numbersgame.domain.usecases.GetGameSettingsUsecase
 
-class GameViewModel(application: Application) : AndroidViewModel(application) {
+class GameViewModel(
+    private val application: Application,
+    private val level: Level
+) : ViewModel() {
 
     private lateinit var gameSettings: GameSettings
-    private lateinit var level: Level
 
-    private val context = application
     private val repository = GameRepositoryImpl
 
-    private val generateQuestionUsecase = GenerateQuestionUsecase(repository)
-    private val getGameSettingsUsecase = GetGameSettingsUsecase(repository)
+    private val generateQuestionUseCase = GenerateQuestionUsecase(repository)
+    private val getGameSettingsUseCase = GetGameSettingsUsecase(repository)
 
     private var timer: CountDownTimer? = null
 
@@ -64,8 +65,12 @@ class GameViewModel(application: Application) : AndroidViewModel(application) {
     private var countOfRightAnswers = 0
     private var countOfQuestions = 0
 
-    fun startGame(level: Level) {
-        getGameSettings(level)
+    init {
+        startGame()
+    }
+
+    private fun startGame() {
+        getGameSettings()
         startTimer()
         generateQuestion()
         updateProgress()
@@ -81,7 +86,7 @@ class GameViewModel(application: Application) : AndroidViewModel(application) {
         val percent = calculatePercentOfRightAnswers()
         _percentOfRightAnswers.value = percent
         _progressAnswers.value = String.format(
-            context.resources.getString(R.string.progress_answers),
+            application.resources.getString(R.string.progress_answers),
             countOfRightAnswers.toString(),
             gameSettings.minCountOfRightAnswers.toString()
         )
@@ -104,9 +109,8 @@ class GameViewModel(application: Application) : AndroidViewModel(application) {
         countOfQuestions++
     }
 
-    private fun getGameSettings(level: Level) {
-        this.level = level
-        this.gameSettings = getGameSettingsUsecase(level)
+    private fun getGameSettings() {
+        this.gameSettings = getGameSettingsUseCase(level)
         _minPercent.value = gameSettings.minPercentOfRightAnswers
     }
 
@@ -127,7 +131,7 @@ class GameViewModel(application: Application) : AndroidViewModel(application) {
     }
 
     private fun generateQuestion() {
-        _question.value = generateQuestionUsecase(gameSettings.maxSumValue)
+        _question.value = generateQuestionUseCase(gameSettings.maxSumValue)
     }
 
     private fun formatTime(millisUntilFinished: Long): String {
