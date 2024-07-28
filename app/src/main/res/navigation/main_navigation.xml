@@ -31,10 +31,17 @@
             app:destination="@id/gameFinishedFragment"
             app:popUpTo="@id/gameFragment"
             app:popUpToInclusive="true" />
+        <argument
+            android:name="level"
+            app:argType="com.example.numbersgame.domain.entities.Level" />
     </fragment>
     <fragment
         android:id="@+id/gameFinishedFragment"
         android:name="com.example.numbersgame.presentation.GameFinishedFragment"
         android:label="fragment_game_finished"
-        tools:layout="@layout/fragment_game_finished" />
+        tools:layout="@layout/fragment_game_finished" >
+        <argument
+            android:name="gameResult"
+            app:argType="com.example.numbersgame.domain.entities.GameResult" />
+    </fragment>
 </navigation>
