@@ -13,6 +13,7 @@
         android:theme="@style/Theme.NumbersGame"
         tools:targetApi="31">
         <activity
+            android:screenOrientation="fullSensor"
             android:name=".presentation.MainActivity"
             android:exported="true">
             <intent-filter>

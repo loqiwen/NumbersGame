@@ -20,49 +20,47 @@ object GameRepositoryImpl : GameRepository {
         val rightAnswer = sum - visibleNumber
         options.add(rightAnswer)
         val from = max(rightAnswer - countOfOptions, MIN_ANSWER_VALUE)
-        val until = min(maxSumValue, rightAnswer + countOfOptions)
-        for (i in 0..<countOfOptions) {
-            val notRightAnswer = Random.nextInt(from, until)
-            options.add(notRightAnswer)
+        val to = min(maxSumValue, rightAnswer + countOfOptions)
+        while (options.size < countOfOptions) {
+            options.add(Random.nextInt(from, to))
         }
-        val question = Question(
-            sum = sum,
-            visibleNumber = visibleNumber,
-            options = options.toList()
-        )
-
-        return question
+        return Question(sum, visibleNumber, options.toList())
     }
 
     override fun getGameSettings(level: Level): GameSettings {
         return when (level) {
-            Level.TEST -> GameSettings(
-                10,
-                3,
-                50,
-                10
-            )
-
-            Level.EASY -> GameSettings(
-                10,
-                10,
-                70,
-                60
-            )
-
-            Level.NORMAL -> GameSettings(
-                20,
-                20,
-                80,
-                40
-            )
-
-            Level.HARD -> GameSettings(
-                30,
-                30,
-                90,
-                40
-            )
+            Level.TEST -> {
+                GameSettings(
+                    10,
+                    3,
+                    50,
+                    8
+                )
+            }
+            Level.EASY -> {
+                GameSettings(
+                    10,
+                    10,
+                    70,
+                    60
+                )
+            }
+            Level.NORMAL -> {
+                GameSettings(
+                    20,
+                    20,
+                    80,
+                    40
+                )
+            }
+            Level.HARD -> {
+                GameSettings(
+                    30,
+                    30,
+                    90,
+                    40
+                )
+            }
         }
     }
 }
