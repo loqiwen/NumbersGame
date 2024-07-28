@@ -7,6 +7,7 @@ import android.view.ViewGroup
 import androidx.activity.OnBackPressedCallback
 import androidx.fragment.app.Fragment
 import androidx.fragment.app.FragmentManager
+import androidx.navigation.fragment.findNavController
 import com.example.numbersgame.R
 import com.example.numbersgame.databinding.FragmentGameFinishedBinding
 import com.example.numbersgame.databinding.FragmentWelcomeBinding
@@ -40,12 +41,6 @@ class GameFinishedFragment : Fragment() {
     }
 
     private fun setupClickListeners() {
-        val callback = object : OnBackPressedCallback(true) {
-            override fun handleOnBackPressed() {
-                retryGame()
-            }
-        }
-        requireActivity().onBackPressedDispatcher.addCallback(viewLifecycleOwner, callback)
         binding.buttonRetry.setOnClickListener {
             retryGame()
         }
@@ -109,7 +104,7 @@ class GameFinishedFragment : Fragment() {
 
     companion object {
 
-        private const val KEY_GAME_RESULT = "game_result"
+        const val KEY_GAME_RESULT = "game_result"
 
         fun newInstance(gameResult: GameResult): GameFinishedFragment {
             return GameFinishedFragment().apply {
